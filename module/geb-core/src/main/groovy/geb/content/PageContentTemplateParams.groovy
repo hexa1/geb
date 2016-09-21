@@ -55,8 +55,17 @@ class PageContentTemplateParams {
      */
     final toWait
 
+    Map all = [:]
+    String bind
+    String code
+    String label
+    def codeModeFieldType
+
     PageContentTemplateParams(PageContentTemplate owner, Map<String, ?> params) {
         def paramsToProcess = params == null ? Collections.emptyMap() : new HashMap<String, Object>(params)
+        paramsToProcess?.each { k, v ->
+            all[k] = v
+        }
 
         required = toBoolean(paramsToProcess, 'required', true)
         cache = toBoolean(paramsToProcess, 'cache', false)
@@ -81,13 +90,18 @@ class PageContentTemplateParams {
         }
         page = pageParam as Class<? extends Page>
 
-        wait = paramsToProcess.remove("wait")
-        toWait = paramsToProcess.remove("toWait")
+        wait   = paramsToProcess.remove ("wait")
+        toWait = paramsToProcess.remove ("toWait")
+        bind   = paramsToProcess.remove ("bind")
+        code   = paramsToProcess.remove ("code")
+        label  = paramsToProcess.remove ("label")
+        codeModeFieldType = paramsToProcess.remove("codeModeFieldType") ?: 0 //CodeModeFieldType.DEFAULT
 
-        def unrecognizedParams = paramsToProcess.keySet() as TreeSet
-        if (unrecognizedParams) {
-            throw new InvalidPageContent("${owner.toString().capitalize()} uses unknown content parameters: ${unrecognizedParams.join(", ")}")
-        }
+        //def unrecognizedParams = paramsToProcess.keySet() as TreeSet
+        // We should allow any arbitrary parameters
+        //if (unrecognizedParams) {
+        //    throw new InvalidPageContent("${owner.toString().capitalize()} uses unknown content parameters: ${unrecognizedParams.join(", ")}")
+        //}
     }
 
     private static boolean toBoolean(Map<String, ?> params, String key, boolean defaultValue) {
