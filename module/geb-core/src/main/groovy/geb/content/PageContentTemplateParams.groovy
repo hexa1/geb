@@ -61,6 +61,7 @@ class PageContentTemplateParams {
     Boolean isUsernameField
     Boolean isPasswordField
     def codeModeFieldType
+    PageContentTemplate pageContentTemplate
 
     PageContentTemplateParams(PageContentTemplate owner, Map<String, ?> params) {
         def paramsToProcess = params == null ? Collections.emptyMap() : new HashMap<String, Object>(params)
@@ -98,6 +99,7 @@ class PageContentTemplateParams {
         isUsernameField = paramsToProcess.remove ("isUsernameField") ?: false
         isPasswordField = paramsToProcess.remove ("isPasswordField") ?: false
         codeModeFieldType = paramsToProcess.remove("codeModeFieldType") ?: 0
+        this.pageContentTemplate = owner // owner has the 'Closure factory' property, it gives an ability to refresh a page element, if the element was removed from the page and restored
 
         //def unrecognizedParams = paramsToProcess.keySet() as TreeSet
         // We should allow any arbitrary parameters
