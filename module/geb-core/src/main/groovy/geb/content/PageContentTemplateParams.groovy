@@ -60,6 +60,7 @@ class PageContentTemplateParams {
     String label
     Boolean isUsernameField
     Boolean isPasswordField
+    Boolean isBrokerCodeField
     def codeModeFieldType
     PageContentTemplate pageContentTemplate
 
@@ -98,6 +99,7 @@ class PageContentTemplateParams {
         label  = paramsToProcess.remove ("label")
         isUsernameField = paramsToProcess.remove ("isUsernameField") ?: false
         isPasswordField = paramsToProcess.remove ("isPasswordField") ?: false
+        isBrokerCodeField = paramsToProcess.remove ("isBrokerCodeField") ?: false
         codeModeFieldType = paramsToProcess.remove("codeModeFieldType") ?: 0
         this.pageContentTemplate = owner // owner has the 'Closure factory' property, it gives an ability to refresh a page element, if the element was removed from the page and restored
 
